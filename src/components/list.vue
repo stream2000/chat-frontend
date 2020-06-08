@@ -2,7 +2,7 @@
   import {mapState, mapActions, mapGetters} from "vuex"
 
   export default {
-    computed : {
+    computed: {
       ...mapState([
         "currentSessionId",
       ]),
