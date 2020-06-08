@@ -32,8 +32,8 @@
 
 <template>
   <div class="list">
-    <transition-group name="tg" tag="ul">
-      <li v-for="item in filteredSessions" v-bind:key="item.latest" :class="{ active: item.id === currentSessionId }"
+    <ul>
+      <li v-for="item in filteredSessions" v-bind:key="item.id" :class="{ active: item.id === currentSessionId }"
           @click="selectSession(item.id)">
         <img class="avatar-img" :alt="item.user.name" :src="item.user.img">
         <div class="middle">
@@ -45,7 +45,7 @@
           <p v-if="item.unread" class="unread">{{item.unread}}</p>
         </div>
       </li>
-    </transition-group>
+    </ul>
   </div>
 </template>
 

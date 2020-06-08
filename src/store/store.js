@@ -47,12 +47,12 @@ const store = new Vuex.Store({
         },
         messages: [],
         latest: 1,
-        unread: 0
+        unread: 2
       },
 
     ],
     // 当前选中的会话
-    currentSessionId: 1,
+    currentSessionId: -1,
     // 过滤出只包含这个key的会话
     filterKey: ''
   },
@@ -74,7 +74,12 @@ const store = new Vuex.Store({
     },
     // 选择会话
     SELECT_SESSION(state, id) {
+      console.debug("")
       state.currentSessionId = id;
+      let index = state.sessions.findIndex((item)=>item.id === id)
+      let session = state.sessions[index]
+      session.unread = 0
+      Vue.set(state.sessions,index,session)
     },
     // 搜索
     SET_FILTER_KEY(state, value) {
@@ -96,7 +101,6 @@ const store = new Vuex.Store({
 store.watch(
   (state) => state.sessions,
   (val) => {
-    console.log('CHANGE: ', val);
     localStorage.setItem('vue-chat-session', JSON.stringify(val));
   },
   {
