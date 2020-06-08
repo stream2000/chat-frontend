@@ -6,7 +6,10 @@
     computed: {
       ...mapGetters({
           session: "currentSession"
-        }
+        },
+        ...mapState([
+          "currentSessionId"
+        ])
       ),
       ...mapState([
         "user",
@@ -36,8 +39,8 @@
 </script>
 
 <template>
-  <div class="message" id="scroll-part" v-scroll-bottom="session.messages">
-    <ul v-if="session">
+  <div class="message" id="scroll-part" v-if="session" v-scroll-bottom="session.messages">
+    <ul>
       <li v-for="item in session.messages">
         <p class="time">
           <span>{{ item.date | time }}</span>
