@@ -75,6 +75,8 @@
             message: "用户名或密码错误"
           })
         } else {
+          this.form.id = ''
+          this.form.pw = ''
           // weather this function is async
           await this.setJwt(data.jwt)
           // mock axios
@@ -107,8 +109,6 @@
         }))
       },
 
-
-      //关闭登录窗口前的回调(如果用户没有登录成功，则再次打开本窗口，以达到强制登录的目的)
       closeCallback: function () {
         this.modelShow = !this.isLogin
       }

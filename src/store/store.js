@@ -119,6 +119,13 @@ const store = new Vuex.Store({
 
     INVALIDATE_LOGIN(state) {
       state.isLogin = false
+      state.jwt = ""
+      state.sessions = []
+      state.user ={
+        name: '未登录',
+        img: './static/no-login.jpeg'
+      }
+      localStorage.clear()
     },
 
     // 发送消息
@@ -175,6 +182,10 @@ const store = new Vuex.Store({
         commit("SET_JWT", jwt)
         resolve()
       }))
+    },
+
+    signOut({commit}){
+      commit("INVALIDATE_LOGIN")
     },
 
     pollUserInformation({commit}) {

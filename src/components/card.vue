@@ -1,17 +1,31 @@
 <script>
   import {mapState, mapActions} from 'vuex'
-
+  import Info from './dialog/info'
+  import Login from './dialog/Login'
   export default {
     computed: mapState([
       "user", "filterKey"
     ]),
+    components: {Info,Login},
+    data(){
+     return {
+       infoShow : false
+     }
+    },
     methods: {
       ...mapActions([
         "search",
       ]),
+      clickAvatar(){
+        this.infoShow = true
+      },
       onKeyup(e) {
         this.search(e.target.value);
-      }
+      },
+      closeInfoWindow(){
+        console.log("")
+        this.infoShow = false
+      },
     }
   };
 </script>
@@ -19,12 +33,14 @@
 <template>
   <div class="card">
     <header>
-      <img class="avatar" width="40" height="40" :alt="user.name" :src="user.img">
+      <img class="avatar" width="40" height="40" @click="clickAvatar" :alt="user.name" :src="user.img">
       <p class="name">{{user.name}}</p>
     </header>
     <footer>
       <input class="search" type="text" placeholder="search user..." @keyup="onKeyup">
     </footer>
+    <info v-on:closeInfoWindow="closeInfoWindow" v-bind:info-show="infoShow"></info>
+    <login></login>
   </div>
 </template>
 

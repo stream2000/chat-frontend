@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <login></login>
     <div class="sidebar">
       <card></card>
       <list></list>
@@ -18,10 +17,9 @@
   import List from 'components/list';
   import InputArea from 'components/inputarea';
   import Message from 'components/message';
-  import Login from 'components/dialog/Login'
   export default {
     name: 'App',
-    components: { Card, List, InputArea, Message ,Login},
+    components: { Card, List, InputArea, Message},
     methods: {
       ...mapActions([
         'initData',
@@ -33,7 +31,11 @@
           this.$message({
             type: "info",
             message: "请重新登录",
-
+          })
+        }else{
+          this.$message({
+            type: "info",
+            message: "初始化成功",
           })
         }
       });
