@@ -6,6 +6,15 @@ import store from "./store/store";
 import Element from "element-ui"
 import 'element-ui/lib/theme-chalk/index.css';
 import Axios from "axios";
+import VueSocketIO from 'vue-socket.io'
+
+Vue.use(new VueSocketIO({
+  debug: true,
+  // 服务器端地址
+  connection: 'http://localhost:8090',
+  vuex: {
+  }
+}))
 
 Vue.config.productionTip = false
 Vue.use(Element, {size: 'small', zIndex: 3000})

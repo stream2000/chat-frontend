@@ -20,6 +20,7 @@
     "lodash": "^4.17.15",
     "polyfill": "^0.1.0",
     "vue": "^2.1.0",
+    "vue-socket.io": "^3.0.9",
     "vuex": "^2.0.0"
   },
   "devDependencies": {
