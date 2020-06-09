@@ -2,28 +2,28 @@
   import {mapState, mapActions} from 'vuex'
   import Info from './dialog/info'
   import Login from './dialog/Login'
+
   export default {
     computed: mapState([
       "user", "filterKey"
     ]),
-    components: {Info,Login},
-    data(){
-     return {
-       infoShow : false
-     }
+    components: {Info, Login},
+    data() {
+      return {
+        infoShow: false
+      }
     },
     methods: {
       ...mapActions([
         "search",
       ]),
-      clickAvatar(){
+      clickAvatar() {
         this.infoShow = true
       },
       onKeyup(e) {
         this.search(e.target.value);
       },
-      closeInfoWindow(){
-        console.log("")
+      closeInfoWindow() {
         this.infoShow = false
       },
     }

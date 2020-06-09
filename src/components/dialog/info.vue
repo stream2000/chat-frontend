@@ -1,5 +1,5 @@
 <template>
-  <el-dialog width="30%"  :visible.sync="infoShow"
+  <el-dialog width="30%" title="个人信息" :visible.sync="infoShow"
              :show-close="true"
              :close-on-click-modal="true"
              :close-on-press-escape="true"
@@ -37,7 +37,6 @@
         this.$emit('closeInfoWindow')
       },
       beforeCloseCallback(){
-        console.log("before close")
         this.$emit('closeInfoWindow')
       }
     },

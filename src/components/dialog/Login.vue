@@ -58,7 +58,7 @@
       ]),
 
       validateInput() {
-        if(this.form.id === ''){
+        if (this.form.id === '') {
 
         }
       },
@@ -68,17 +68,18 @@
           return
         }
         // mock axios
-        let data = await this.sendLoginRequest(this.form.id, this.form.pw)
-        if (!data.ok) {
+        let res = await this.sendLoginRequest(this.form.id, this.form.pw)
+        if (!res.ok) {
           this.$message({
             type: "error",
             message: "用户名或密码错误"
           })
+
         } else {
           this.form.id = ''
           this.form.pw = ''
           // weather this function is async
-          await this.setJwt(data.jwt)
+          await this.setJwt([res.data.jwt, res.data.id])
           // mock axios
           let ok = await this.pollUserInformation()
           if (!ok) {
@@ -91,21 +92,25 @@
       },
 
       sendLoginRequest(account, password) {
-        return new Promise(((resolve, reject) => {
-          setTimeout(() => {
-            if (account === 'admin' && password === '111111') {
-              let data = {
-                ok: true,
-                jwt: "111111"
-              }
-              resolve(data)
+
+        return new Promise(((resolve) => {
+          this.$axios.post("/api/auth", {
+            account: account,
+            password: password,
+          }).then((response) => {
+            if (response.data.code === 200) {
+              resolve({
+                data: response.data.data,
+                ok: true
+              })
             } else {
-              let data = {
+              resolve({
                 ok: false
-              }
-              resolve(data)
+              })
             }
-          }, 100)
+          }).catch((reason => {
+            log.console(reason)
+          }))
         }))
       },
 

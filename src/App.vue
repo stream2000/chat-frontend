@@ -17,22 +17,23 @@
   import List from 'components/list';
   import InputArea from 'components/inputarea';
   import Message from 'components/message';
+
   export default {
     name: 'App',
-    components: { Card, List, InputArea, Message},
+    components: {Card, List, InputArea, Message},
     methods: {
       ...mapActions([
         'initData',
       ]),
     },
     created() {
-      this.initData().then((r)=>{
-        if(!r){
+      this.initData().then((r) => {
+        if (!r) {
           this.$message({
             type: "info",
             message: "请重新登录",
           })
-        }else{
+        } else {
           this.$message({
             type: "info",
             message: "初始化成功",
@@ -55,23 +56,27 @@
     .sidebar, .main {
       height: 100%;
     }
+
     .sidebar {
       float: left;
       width: 200px;
       color: #f4f4f4;
       background-color: #2e3238;
     }
+
     .main {
       position: relative;
       overflow: hidden;
       background-color: #eee;
     }
+
     .text {
       position: absolute;
       width: 100%;
       bottom: 0;
       left: 0;
     }
+
     .message {
       height: ~'calc(100% - 160px)';
     }
