@@ -1,5 +1,5 @@
 <template>
-  <el-dialog width="30%" title="登录" :visible.sync="modelShow"
+  <el-dialog width="30%" title="登录 / 注册" :visible.sync="modelShow"
              :show-close="false"
              :close-on-click-modal="false"
              :close-on-press-escape="false"
@@ -18,7 +18,7 @@
     </el-form>
 
     <div slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="login('form')">确 定</el-button>
+      <el-button type="primary" @click="login('form')">确定</el-button>
     </div>
 
   </el-dialog>
@@ -44,7 +44,6 @@
       return {
         //是否显示本面板
         modelShow: false,
-        // bind text
         form: {
           id: '',
           pw: '',
@@ -53,27 +52,62 @@
     },
 
     methods: {
-      ...mapActions({
-        login(dispatch) {
-          if (this.isLogin) {
-            return
-          }
-          dispatch('sendLoginRequest', {account: this.form.id,password:this.form.pw}).then((data) => {
-            console.log(data)
-            if (!data.ok) {
-              this.$message({
-                type: "danger",
-                message: "用户名或密码错误"
-              })
-            } else {
-              this.pollUserInformation()
-            }
-          })
-        },
-      }),
       ...mapActions([
-        "pollUserInformation"
+        "setJwt",
+        "pollUserInformation",
       ]),
+
+      validateInput() {
+        if(this.form.id === ''){
+
+        }
+      },
+      // 界面控制逻辑。 需要action的返回结果。
+      async login() {
+        if (this.isLogin) {
+          return
+        }
+        // mock axios
+        let data = await this.sendLoginRequest(this.form.id, this.form.pw)
+        if (!data.ok) {
+          this.$message({
+            type: "error",
+            message: "用户名或密码错误"
+          })
+        } else {
+          // weather this function is async
+          await this.setJwt(data.jwt)
+          // mock axios
+          let ok = await this.pollUserInformation()
+          if (!ok) {
+            this.$message({
+              type: "error",
+              message: "拉取用户信息失败"
+            })
+          }
+        }
+      },
+
+      sendLoginRequest(account, password) {
+        return new Promise(((resolve, reject) => {
+          setTimeout(() => {
+            if (account === 'admin' && password === '111111') {
+              let data = {
+                ok: true,
+                jwt: "111111"
+              }
+              resolve(data)
+            } else {
+              let data = {
+                ok: false
+              }
+              resolve(data)
+            }
+          }, 100)
+        }))
+      },
+
+
       //关闭登录窗口前的回调(如果用户没有登录成功，则再次打开本窗口，以达到强制登录的目的)
       closeCallback: function () {
         this.modelShow = !this.isLogin

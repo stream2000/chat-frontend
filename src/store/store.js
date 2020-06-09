@@ -14,6 +14,7 @@ const latest = (messages) => {
     return messages[messages.length - 1].date.getTime()
   }
 }
+
 const store = new Vuex.Store({
   state: {
 
@@ -112,11 +113,8 @@ const store = new Vuex.Store({
 
     SET_JWT(state, jwt) {
       state.jwt = jwt
-      localStorage.setItem("jwt",jwt)
-    },
-
-    SET_LOGIN(state) {
       state.isLogin = true
+      localStorage.setItem("jwt", jwt)
     },
 
     INVALIDATE_LOGIN(state) {
@@ -151,13 +149,18 @@ const store = new Vuex.Store({
 
   },
   actions: {
-    initData: ({dispatch, commit}) => {
+    initData: async ({dispatch, commit}) => {
       const jwt = localStorage.getItem("jwt")
       if (jwt == null || jwt.length === 0) {
-        // wait the user to login
+        return new Promise(resolve => {
+          resolve(false)
+        })
       } else {
         commit("SET_JWT", jwt)
-        dispatch('pollUserInformation')
+        let response = await dispatch('pollUserInformation')
+        return new Promise(resolve => {
+          resolve(response)
+        })
         // init validation
       }
     },
@@ -167,35 +170,34 @@ const store = new Vuex.Store({
 
     search: ({commit}, value) => commit('SET_FILTER_KEY', value),
 
-    pollUserInformation:  ({commit}) => {
-      // always success
-      setTimeout(() => {
-        // get the information
-        let user = {
-          name: 'Stream2000',
-          img: './static/1.jpg'
-        }
-        let sessionIds = [1, 2]
-        commit('INIT_DATA', [user, sessionIds])
-        commit('SET_LOGIN')
-      }, 100)
+    setJwt({commit}, jwt) {
+      return new Promise((resolve => {
+        commit("SET_JWT", jwt)
+        resolve()
+      }))
     },
 
-    sendLoginRequest({commit,dispatch},{account,password}){
-      return new Promise(((resolve, reject) => {
+    pollUserInformation({commit}) {
+      return new Promise((resolve => {
         setTimeout(() => {
-          if (account === 'admin' && password === '111111') {
-            let data = {
-              ok: true
-            }
-            commit("SET_JWT",data.jwt)
-            resolve(data)
-          } else {
-            let data = {
-              ok: false
-            }
-            resolve(data)
+          // get the information
+          let user = {
+            name: 'Stream2000',
+            img: './static/1.jpg'
           }
+          let sessionIds = [1, 2]
+          let response = {
+            data: {
+              user: user,
+              sessionIds: sessionIds
+            },
+            ok: true,
+            code: 200
+          }
+          commit('INIT_DATA',[response.data.user,response.data.sessionIds])
+          resolve(true)
+          // commit('INIT_DATA', [user, sessionIds])
+          // commit('SET_LOGIN')
         }, 100)
       }))
     },

@@ -5,6 +5,7 @@
     computed: {
       ...mapState([
         "currentSessionId",
+        "sessions"
       ]),
       ...mapState({
         filteredSessions: (state) => state.sessions.filter(session => session.user.name.includes(state.filterKey))

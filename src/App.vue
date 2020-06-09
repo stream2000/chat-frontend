@@ -28,7 +28,15 @@
       ]),
     },
     created() {
-      this.initData();
+      this.initData().then((r)=>{
+        if(!r){
+          this.$message({
+            type: "info",
+            message: "请重新登录",
+
+          })
+        }
+      });
     }
   }
 </script>
