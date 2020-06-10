@@ -40,7 +40,7 @@ const mutations = {
   INVALIDATE_LOGIN(state) {
     state.isLogin = false
     state.jwt = ""
-    state.sessions.clear()
+    state.sessions = []
     state.id = -1
     state.user = {
       name: '未登录',
