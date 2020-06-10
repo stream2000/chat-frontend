@@ -66,6 +66,8 @@
       width: 200px;
       color: #f4f4f4;
       background-color: #2e3238;
+      display: flex;
+      flex-direction: column;
     }
 
     .main {
