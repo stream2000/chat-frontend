@@ -5,8 +5,6 @@
       <list></list>
     </div>
     <div class="main">
-      <!-- TODO: add a header here to represent online members -->
-      <MessageHeader></MessageHeader>
       <message></message>
       <InputArea></InputArea>
     </div>
@@ -19,11 +17,10 @@
   import List from 'components/list';
   import InputArea from 'components/inputarea';
   import Message from 'components/message';
-  import MessageHeader from 'components/message-header'
 
   export default {
     name: 'App',
-    components: {Card, List, InputArea, Message, MessageHeader},
+    components: {Card, List, InputArea, Message},
     methods: {
       ...mapActions([
         'initData',
@@ -86,9 +83,7 @@
     .message {
       height: ~'calc(100% - 160px)';
     }
-    .m-header{
-      height: 30px;
-    }
+
   }
 
 

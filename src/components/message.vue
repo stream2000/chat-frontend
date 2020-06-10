@@ -1,8 +1,10 @@
 <script>
   import {mapGetters, mapState} from "vuex"
   import Vue from 'vue'
+  import MessageHeader from './message-header'
 
   export default {
+    components: {MessageHeader},
     computed: {
       ...mapGetters({
           session: "currentSession"
@@ -39,25 +41,38 @@
 </script>
 
 <template>
-  <div class="message" id="scroll-part" v-if="session" v-scroll-bottom="session.messages">
-    <ul>
-      <li v-for="item in session.messages">
-        <p class="time">
-          <span>{{ item.date | time }}</span>
-        </p>
-        <div class="main" :class="{ self: item.self }">
-          <img class="avatar" width="30" height="30" :src="item.self ? user.img : session.user.img"/>
-          <div class="text">{{ item.content }}</div>
-        </div>
-      </li>
-    </ul>
+  <div>
+    <MessageHeader></MessageHeader>
+    <div class="message" id="scroll-part" v-if="session" v-scroll-bottom="session.messages">
+      <ul>
+        <li v-for="item in session.messages">
+          <p class="time">
+            <span>{{ item.date | time }}</span>
+          </p>
+          <div class="main" :class="{ self: item.self }">
+            <img class="avatar" width="30" height="30" :src="item.self ? user.img : session.user.img"/>
+            <div class="text">{{ item.content }}</div>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
+
 </template>
 
 <style lang="less" scoped>
+  .m-header {
+    height: 30px;
+  }
+
   .message {
     padding: 0 0 35px 5px;
     overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      width: 1px;
+      background-color: rgba(255, 255, 255, 0.03);
+    }
 
     li {
       margin-bottom: 10px;
