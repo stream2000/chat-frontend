@@ -56,11 +56,11 @@
 
 <style lang="less" scoped>
   .message {
-    padding: 10px 15px;
+    padding: 0 0 35px 5px;
     overflow-y: scroll;
 
     li {
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
 
     .time {
