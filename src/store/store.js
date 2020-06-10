@@ -76,7 +76,10 @@ const store = new Vuex.Store({
 store.watch(
   (state) => state.sessions,
   (val) => {
-    let sessionsKey = "user-" + this.store.id + "-sessions"
+    if(val.length === 0){
+      return
+    }
+    let sessionsKey = "user-" + this.a.state.id + "-sessions"
     localStorage.setItem(sessionsKey, JSON.stringify(val));
   },
   {

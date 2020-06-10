@@ -41,7 +41,7 @@ const actions = {
     return new Promise((resolve => {
       Axios.get("/api/init").then((r => {
         let data = r.data.data
-        commit('INIT_DATA', [data.user, data.sessionIds])
+        commit('INIT_DATA', [data.user, data.sessions])
         resolve(true)
       }))
 

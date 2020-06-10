@@ -2,50 +2,33 @@ import Vue from "vue";
 
 const now = new Date();
 const mutations = {
-  INIT_DATA(state, [user, sessionIds]) {
-    // fake init
-    let previousSessions = [
-      {
-        id: 1,
-        user: {
-          name: '示例介绍',
-          img: './static/2.png'
-        },
-        messages: [
-          {
-            content: 'Hello，这是一个基于Vue + Vuex + Webpack构建的简单chat示例，聊天记录保存在localStorge, 有什么问题可以通过Github Issue问我。',
-            date: now
-          }, {
-            content: '项目地址: https://github.com/coffcer/vue-chat',
-            date: now,
-          }
-        ],
-        latest: 12,
-        unread: 10,
-      },
-      {
-        id: 2,
-        user: {
-          name: 'WebPack',
-          img: './static/3.jpg'
-        },
-        messages: [],
-        latest: 1,
-        unread: 2
-      },
-    ]
+  INIT_DATA(state, [user, otherUsers]) {
     let sessionsKey = "user-" + state.id + "-sessions"
     let data = localStorage.getItem(sessionsKey);
-    state.user = user
     if (data) {
-      let sessions = JSON.parse(data);
-      sessionIds.forEach((id) => {
-        let session = sessions.find((item) => item.id === id)
-        if (session) {
-          state.sessions.push(session)
-        }
-      })
+      var storedSessions = JSON.parse(data);
+
     }
+    state.user = user
+    otherUsers.forEach((user) => {
+      let session = {
+        id: user.id,
+        user: {
+          name: user.name,
+          img: user.img,
+        },
+        unread: 0,
+        messages: [],
+      }
+      if (storedSessions) {
+        let previousSession = storedSessions.find((item) => item.id === user.id)
+        if (previousSession) {
+          session.messages = previousSession.messages
+        }
+      }
+      console.log(session)
+      state.sessions.push(session)
+    })
   },
 
   SET_LOGIN(state, [jwt, id]) {
