@@ -31,37 +31,7 @@ const store = new Vuex.Store({
 
     filterKey: '',
 
-    sessions: [
-      // {
-      //   id: 1,
-      //   user: {
-      //     name: '示例介绍',
-      //     img: './static/2.png'
-      //   },
-      //   messages: [
-      //     {
-      //       content: 'Hello，这是一个基于Vue + Vuex + Webpack构建的简单chat示例，聊天记录保存在localStorge, 有什么问题可以通过Github Issue问我。',
-      //       date: now
-      //     }, {
-      //       content: '项目地址: https://github.com/coffcer/vue-chat',
-      //       date: now,
-      //     }
-      //   ],
-      //   latest: 12,
-      //   unread: 10,
-      // },
-      // {
-      //   id: 2,
-      //   user: {
-      //     name: 'WebPack',
-      //     img: './static/3.jpg'
-      //   },
-      //   messages: [],
-      //   latest: 1,
-      //   unread: 2
-      // },
-
-    ],
+    sessions: [],
   },
   getters: {
     currentSession: (state) => state.sessions.find(session => session.id === state.currentSessionId)

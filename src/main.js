@@ -6,10 +6,12 @@ import store from "./store/store";
 import Element from "element-ui"
 import 'element-ui/lib/theme-chalk/index.css';
 import Axios from "axios";
+import  socket from "./socket"
 
 Vue.config.productionTip = false
 Vue.use(Element, {size: 'small', zIndex: 3000})
 Vue.prototype.$axios = Axios;
+Vue.prototype.$socket = socket;
 
 Axios.defaults.baseURL = 'http://localhost:8089';
 
@@ -40,5 +42,5 @@ new Vue({
   el: '#app',
   components: {App},
   template: '<App/>',
-  store: store
+  store: store,
 })

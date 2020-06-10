@@ -7,7 +7,6 @@ const mutations = {
     let data = localStorage.getItem(sessionsKey);
     if (data) {
       var storedSessions = JSON.parse(data);
-
     }
     state.user = user
     otherUsers.forEach((user) => {
@@ -26,7 +25,6 @@ const mutations = {
           session.messages = previousSession.messages
         }
       }
-      console.log(session)
       state.sessions.push(session)
     })
   },

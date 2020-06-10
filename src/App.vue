@@ -27,6 +27,7 @@
       ]),
     },
     created() {
+
       this.initData().then((r) => {
         if (!r) {
           this.$message({
