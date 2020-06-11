@@ -1,5 +1,4 @@
 import Axios, {AxiosInstance as axios} from "axios";
-import da from "element-ui/src/locale/lang/da";
 
 const actions = {
   initData: async ({dispatch, commit}) => {

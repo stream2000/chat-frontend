@@ -1,4 +1,6 @@
 import Vue from "vue";
+import socket from "../socket";
+import {Message} from "element-ui";
 
 const now = new Date();
 const mutations = {
@@ -30,6 +32,11 @@ const mutations = {
   },
 
   SET_LOGIN(state, [jwt, id]) {
+    socket.emit("login", {jwt: jwt}, ok => {
+      if (ok === false) {
+        Message.error("jwt 验证失败！请重新登录")
+      }
+    })
     state.jwt = jwt
     state.isLogin = true
     state.id = id
@@ -38,6 +45,7 @@ const mutations = {
   },
 
   INVALIDATE_LOGIN(state) {
+    socket.emit("logoff")
     state.isLogin = false
     state.jwt = ""
     state.sessions = []
