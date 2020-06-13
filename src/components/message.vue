@@ -23,7 +23,6 @@
           return this.session.user.img
         } else {
           // sender is a "user"
-          console.log(msg)
           const sender = this.$store.state.otherUsers.find(u => u.id == msg.senderId)
           if (sender) {
             return sender.img
