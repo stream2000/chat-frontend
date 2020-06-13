@@ -72,13 +72,13 @@ const mutations = {
     });
   },
 
-  PUSH_NEW_MESSAGE({sessions},[sender_id,content]){
-    console.log(sender_id," ",content)
+  PUSH_NEW_MESSAGE({sessions}, [sender_id, content]) {
     let session = sessions.find(item => item.id == sender_id)
     session.messages.push({
       content: content,
       date: new Date(),
-      self: false
+      self: false,
+      senderId: sender_id,
     });
   },
   // 选择会话

@@ -10,14 +10,29 @@
           session: "currentSession"
         },
         ...mapState([
-          "currentSessionId"
+          "currentSessionId",
+          "otherUsers",
+          "user",
         ])
-      ),
-      ...mapState([
-        "user",
-      ])
+      )
     },
-    methods: {},
+    methods: {
+      getAvatarOfMessage(msg) {
+        if (msg.self) {
+          // return the avatar of current user
+          return this.session.user.img
+        } else {
+          // sender is a "user"
+          console.log(msg)
+          const sender = this.$store.state.otherUsers.find(u => u.id == msg.senderId)
+          if (sender) {
+            return sender.img
+          } else {
+            return ""
+          }
+        }
+      }
+    },
     filters: {
       // 将日期过滤为 hour:minutes
       time(date) {
@@ -50,7 +65,7 @@
             <span>{{ item.date | time }}</span>
           </p>
           <div class="main" :class="{ self: item.self }">
-            <img class="avatar" width="30" height="30" :src="item.self ? user.img : session.user.img"/>
+            <img class="avatar" width="30" height="30" :src="getAvatarOfMessage(item)"/>
             <div class="text">{{ item.content }}</div>
           </div>
         </li>
@@ -60,13 +75,15 @@
 </template>
 
 <style lang="less" scoped>
-  .message-wrapper{
+  .message-wrapper {
     display: flex;
     flex-direction: column;
   }
+
   .m-header {
     height: 30px;
   }
+
   .message {
     padding: 0 10px 10px 5px;
     overflow-y: scroll;
