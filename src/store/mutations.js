@@ -72,19 +72,23 @@ const mutations = {
     });
   },
 
-  PUSH_NEW_MESSAGE({sessions}, [sender_id, content]) {
+  PUSH_NEW_MESSAGE({sessions}, [sender_id, content, type]) {
     // TODO add more logic when the session is a group session
-    let session = sessions.find(item => item.id == sender_id)
+    if (type === "group") {
+      var session = sessions.find(item => item.id == 0)
+    } else {
+      var session = sessions.find(item => item.id == sender_id)
+    }
     session.messages.push({
       content: content,
       date: new Date(),
       self: false,
       senderId: sender_id,
     });
-    if(!session.unread || session.unread === 0){
+    if (!session.unread || session.unread === 0) {
       session.unread = 1
-    }else {
-      session.unread ++
+    } else {
+      session.unread++
     }
   },
   // 选择会话

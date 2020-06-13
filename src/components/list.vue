@@ -5,14 +5,15 @@
     computed: {
       ...mapState([
         "currentSessionId",
-        "sessions"
+        "sessions",
+        "otherUsers"
       ]),
       ...mapState({
         filteredSessions: (state) => state.sessions.filter(session => session.user.name.includes(state.filterKey))
       })
     },
     methods: {
-      latestContent: (session) => {
+      latestContent(session){
         if (session.messages.length <= 0) {
           return "";
         }
@@ -20,7 +21,8 @@
         if (latestMessage.self) {
           return latestMessage.content;
         } else {
-          return session.user.name + ":" + latestMessage.content;
+          let u = this.$store.state.otherUsers.find(item => item.id == latestMessage.senderId)
+          return u.name + ":" + latestMessage.content;
         }
       },
       ...mapActions([
@@ -33,30 +35,32 @@
 
 <template>
   <div class="list">
-      <ul>
-        <li v-for="item in filteredSessions" v-bind:key="item.id" :class="{ active: item.id === currentSessionId }"
-            @click="selectSession(item.id)">
-          <img class="avatar-img" :alt="item.user.name" :src="item.user.img">
-          <div class="middle">
-            <p class="name">{{item.user.name}}</p>
-            <p class="latest-content">{{latestContent(item)}}</p>
-          </div>
-          <div class="right">
-            <p class="time">20:43</p>
-            <p v-if="item.unread" class="unread">{{item.unread}}</p>
-          </div>
-        </li>
-      </ul>
+    <ul>
+      <li v-for="item in filteredSessions" v-bind:key="item.id" :class="{ active: item.id === currentSessionId }"
+          @click="selectSession(item.id)">
+        <img class="avatar-img" :alt="item.user.name" :src="item.user.img">
+        <div class="middle">
+          <p class="name">{{item.user.name}}</p>
+          <p class="latest-content">{{latestContent(item)}}</p>
+        </div>
+        <div class="right">
+          <p class="time">20:43</p>
+          <p v-if="item.unread" class="unread">{{item.unread}}</p>
+        </div>
+      </li>
+    </ul>
   </div>
 </template>
 
 <style scoped lang="less">
   .list {
     overflow-y: auto;
-    &::-webkit-scrollbar{
+
+    &::-webkit-scrollbar {
       width: 0;
       background-color: rgba(255, 255, 255, 0.03);
     }
+
     li {
       cursor: pointer;
       transition: background-color .1s;
@@ -67,7 +71,6 @@
       &:hover {
         background-color: rgba(255, 255, 255, 0.03);
       }
-
 
 
       &.active {

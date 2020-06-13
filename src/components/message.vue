@@ -20,7 +20,7 @@
       getAvatarOfMessage(msg) {
         if (msg.self) {
           // return the avatar of current user
-          return this.session.user.img
+          return this.$store.state.user.img
         } else {
           // sender is a "user"
           const sender = this.$store.state.otherUsers.find(u => u.id == msg.senderId)
@@ -84,7 +84,7 @@
   }
 
   .message {
-    padding: 0 10px 10px 5px;
+    padding: 0 10px 10px 10px;
     overflow-y: scroll;
 
 

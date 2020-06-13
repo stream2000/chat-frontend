@@ -1,5 +1,6 @@
 import Axios, {AxiosInstance as axios} from "axios";
 import socket from "../socket";
+import ro from "element-ui/src/locale/lang/ro";
 
 const actions = {
   initData: async ({dispatch, commit}) => {
@@ -21,14 +22,21 @@ const actions = {
 
   sendMessage: ({commit, rootState}, content) => {
     commit('SEND_MESSAGE', content)
-    socket.emit("msg", {
-      text: content,
-      receiver_id: rootState.currentSessionId,
-    })
+    if(rootState.currentSessionId === 0){
+      socket.emit("group", {
+        text: content,
+        receiver_id: rootState.currentSessionId,
+      })
+    }else {
+      socket.emit("msg", {
+        text: content,
+        receiver_id: rootState.currentSessionId,
+      })
+    }
   },
 
   addNewIncomingMessage({commit, rootState}, msg) {
-      commit("PUSH_NEW_MESSAGE",[msg.sender_id,msg.text])
+    commit("PUSH_NEW_MESSAGE",[msg.sender_id,msg.text,msg.type])
   },
   selectSession: ({commit}, id) => commit('SELECT_SESSION', id),
 
@@ -49,7 +57,14 @@ const actions = {
     return new Promise((resolve => {
       Axios.get("/api/init").then((r => {
         let data = r.data.data
-        commit('INIT_DATA', [data.user, data.sessions])
+        let otherUsers = []
+        otherUsers.push({
+          id: 0,
+          name: "默认群聊",
+          img: "/static/1.jpg"
+        })
+        data.sessions.forEach(item => otherUsers.push(item))
+        commit('INIT_DATA', [data.user, otherUsers])
         resolve(true)
       }))
 
