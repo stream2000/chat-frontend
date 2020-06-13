@@ -80,7 +80,7 @@
       left: 0;
     }
 
-    .message {
+    .message-wrapper {
       height: ~'calc(100% - 160px)';
     }
 

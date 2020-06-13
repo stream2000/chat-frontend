@@ -41,8 +41,8 @@
 </script>
 
 <template>
-  <div>
-    <MessageHeader></MessageHeader>
+  <div class="message-wrapper">
+    <message-header></message-header>
     <div class="message" id="scroll-part" v-if="session" v-scroll-bottom="session.messages">
       <ul>
         <li v-for="item in session.messages">
@@ -57,22 +57,20 @@
       </ul>
     </div>
   </div>
-
 </template>
 
 <style lang="less" scoped>
+  .message-wrapper{
+    display: flex;
+    flex-direction: column;
+  }
   .m-header {
     height: 30px;
   }
-
   .message {
-    padding: 0 0 35px 5px;
+    padding: 0 10px 35px 5px;
     overflow-y: scroll;
 
-    &::-webkit-scrollbar {
-      width: 1px;
-      background-color: rgba(255, 255, 255, 0.03);
-    }
 
     li {
       margin-bottom: 10px;
