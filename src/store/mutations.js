@@ -73,6 +73,7 @@ const mutations = {
   },
 
   PUSH_NEW_MESSAGE({sessions}, [sender_id, content]) {
+    // TODO add more logic when the session is a group session
     let session = sessions.find(item => item.id == sender_id)
     session.messages.push({
       content: content,
@@ -80,6 +81,11 @@ const mutations = {
       self: false,
       senderId: sender_id,
     });
+    if(!session.unread || session.unread === 0){
+      session.unread = 1
+    }else {
+      session.unread ++
+    }
   },
   // 选择会话
   SELECT_SESSION(state, id) {
