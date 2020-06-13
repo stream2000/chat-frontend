@@ -28,12 +28,38 @@ const store = new Vuex.Store({
     },
 
     otherUsers: [],
+    /*
+    user : {
+      id : 1,
+      name : "admin",
+      img : "/static/1.jpg"
+    }
+     */
 
     currentSessionId: -1,
 
     filterKey: '',
 
     sessions: [],
+    /* schema example
+    session : {
+        id: user.id,
+        user: {
+          name: user.name,
+          img: user.img,
+        },
+        unread: 0,
+        messages: [],
+    }
+
+    message : {
+      content: content,
+      date: new Date(),
+      self: false,
+      senderId : 2,
+    }
+
+     */
   },
   getters: {
     currentSession: (state) => state.sessions.find(session => session.id === state.currentSessionId)
