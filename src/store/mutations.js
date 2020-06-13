@@ -1,6 +1,7 @@
 import Vue from "vue";
 import socket from "../socket";
 import {Message} from "element-ui";
+import fa from "element-ui/src/locale/lang/fa";
 
 const now = new Date();
 const mutations = {
@@ -12,6 +13,9 @@ const mutations = {
     }
     state.user = user
     otherUsers.forEach((user) => {
+      // push it to otherUsers
+      state.otherUsers.push(user)
+
       let session = {
         id: user.id,
         user: {
@@ -65,6 +69,16 @@ const mutations = {
       content: content,
       date: new Date(),
       self: true
+    });
+  },
+
+  PUSH_NEW_MESSAGE({sessions},[sender_id,content]){
+    console.log(sender_id," ",content)
+    let session = sessions.find(item => item.id == sender_id)
+    session.messages.push({
+      content: content,
+      date: new Date(),
+      self: false
     });
   },
   // 选择会话

@@ -1,4 +1,5 @@
 import Axios, {AxiosInstance as axios} from "axios";
+import socket from "../socket";
 
 const actions = {
   initData: async ({dispatch, commit}) => {
@@ -18,8 +19,17 @@ const actions = {
     }
   },
 
-  sendMessage: ({commit}, content) => commit('SEND_MESSAGE', content),
+  sendMessage: ({commit, rootState}, content) => {
+    commit('SEND_MESSAGE', content)
+    socket.emit("msg", {
+      text: content,
+      receiver_id: rootState.currentSessionId,
+    })
+  },
 
+  addNewIncomingMessage({commit, rootState}, msg) {
+      commit("PUSH_NEW_MESSAGE",[msg.sender_id,msg.text])
+  },
   selectSession: ({commit}, id) => commit('SELECT_SESSION', id),
 
   search: ({commit}, value) => commit('SET_FILTER_KEY', value),

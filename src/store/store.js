@@ -27,6 +27,8 @@ const store = new Vuex.Store({
       img: './static/no-login.jpeg'
     },
 
+    otherUsers: [],
+
     currentSessionId: -1,
 
     filterKey: '',
@@ -46,7 +48,7 @@ const store = new Vuex.Store({
 store.watch(
   (state) => state.sessions,
   (val) => {
-    if(val.length === 0){
+    if (val.length === 0) {
       return
     }
     let sessionsKey = "user-" + this.a.state.id + "-sessions"
