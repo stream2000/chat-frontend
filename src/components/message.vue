@@ -68,7 +68,7 @@
     height: 30px;
   }
   .message {
-    padding: 0 10px 35px 5px;
+    padding: 0 10px 10px 5px;
     overflow-y: scroll;
 
 
