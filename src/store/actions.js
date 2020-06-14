@@ -1,6 +1,6 @@
 import Axios, {AxiosInstance as axios} from "axios";
 import socket from "../socket";
-import ro from "element-ui/src/locale/lang/ro";
+import Element from "element-ui";
 
 const actions = {
   initData: async ({dispatch, commit}) => {
@@ -22,12 +22,12 @@ const actions = {
 
   sendMessage: ({commit, rootState}, content) => {
     commit('SEND_MESSAGE', content)
-    if(rootState.currentSessionId === 0){
+    if (rootState.currentSessionId === 0) {
       socket.emit("group", {
         text: content,
         receiver_id: rootState.currentSessionId,
       })
-    }else {
+    } else {
       socket.emit("msg", {
         text: content,
         receiver_id: rootState.currentSessionId,
@@ -36,7 +36,7 @@ const actions = {
   },
 
   addNewIncomingMessage({commit, rootState}, msg) {
-    commit("PUSH_NEW_MESSAGE",[msg.sender_id,msg.text,msg.type])
+    commit("PUSH_NEW_MESSAGE", [msg.sender_id, msg.text, msg.type])
   },
   selectSession: ({commit}, id) => commit('SELECT_SESSION', id),
 
@@ -69,6 +69,20 @@ const actions = {
       }))
 
     }))
+  },
+
+  newUserRegister({commit}, newUser) {
+    commit("ADD_NEW_USER", newUser)
+  },
+
+  newUserOnline({rootState, commit}, id) {
+    let u = rootState.otherUsers.find(item => item.id === id)
+    Element.Message.info("用户[" + u.name + "]上线了")
+  },
+
+  userOffline({rootState, commit}, id) {
+    let u = rootState.otherUsers.find(item => item.id === id)
+    Element.Message.info("用户[" + u.name + "]下线了")
   },
 
 }

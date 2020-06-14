@@ -91,6 +91,7 @@ const mutations = {
       session.unread++
     }
   },
+
   // 选择会话
   SELECT_SESSION(state, id) {
     state.currentSessionId = id;
@@ -99,10 +100,28 @@ const mutations = {
     session.unread = 0
     Vue.set(state.sessions, index, session)
   },
+
   // 搜索
   SET_FILTER_KEY(state, value) {
     state.filterKey = value;
-  }
+  },
+
+  ADD_NEW_USER(state, newUser) {
+    let u = state.otherUsers.find(item => item.id === newUser.id)
+    if(u != null){
+      return
+    }
+    state.otherUsers.push(newUser)
+    state.sessions.push({
+      id: newUser.id,
+      user: {
+        name: newUser.name,
+        img: newUser.img,
+      },
+      unread: 0,
+      messages: [],
+    })
+  },
 }
 
 export default mutations
