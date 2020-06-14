@@ -46,7 +46,7 @@
         } else if ((date.getMonth() === yesterday.getMonth() && date.getDate() === yesterday.getDate())) {
           return "昨天"
         } else {
-          return date.getMonth() + "." + date.getDate()
+          return fillWithZero(date.getMonth()) + "-" + fillWithZero(date.getDate())
         }
       },
 

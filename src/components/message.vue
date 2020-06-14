@@ -50,7 +50,8 @@
         } else if ((date.getMonth() === yesterday.getMonth() && date.getDate() === yesterday.getDate())) {
           return "昨天 " + fillWithZero(date.getHours()) + ':' + fillWithZero(date.getMinutes())
         } else {
-          return date.getMonth() + "." + date.getDate() + "  " + fillWithZero(date.getHours()) + ':' + fillWithZero(date.getMinutes())
+          return fillWithZero(date.getMonth()) + "-" + fillWithZero(date.getDate()) +
+            "  " + fillWithZero(date.getHours()) + ':' + fillWithZero(date.getMinutes())
         }
       }
     },
