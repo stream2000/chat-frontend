@@ -34,11 +34,17 @@
     },
     filters: {
       // 将日期过滤为 hour:minutes
-      time(date) {
-        if (typeof date === 'string') {
-          date = new Date(date);
+      time(timeStamp) {
+        let date = new Date(timeStamp)
+        let yesterday = new Date(new Date().getTime() - 1000 * 60 * 60 * 24);
+        let today = new Date();
+        if (date.getMonth() === today.getMonth() && date.getDate() === today.getDate()) {
+          return "today " + date.getHours() + ':' + date.getMinutes();
+        } else if ((date.getMonth() === yesterday.getMonth() && date.getDate() === yesterday.getDate())) {
+          return "yesterday " + date.getHours() + ':' + date.getMinutes();
+        } else {
+          return date.getMonth() + " " + date.getDate() + "  " + date.getHours() + ':' + date.getMinutes();
         }
-        return date.getHours() + ':' + date.getMinutes();
       }
     },
     watch: {},

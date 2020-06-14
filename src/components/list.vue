@@ -13,7 +13,7 @@
       })
     },
     methods: {
-      latestContent(session){
+      latestContent(session) {
         if (session.messages.length <= 0) {
           return "";
         }
@@ -25,10 +25,29 @@
           return u.name + ":" + latestMessage.content;
         }
       },
+
+      latestTime(session) {
+        if (session.messages.length <= 0) {
+          return "";
+        }
+        const latestMessage = session.messages[session.messages.length - 1]
+        let date = new Date(latestMessage.date)
+        let yesterday = new Date(new Date().getTime() - 1000 * 60 * 60 * 24);
+        let today = new Date();
+        if (date.getMonth() === today.getMonth() && date.getDate() === today.getDate()) {
+          return date.getHours() + ':' + date.getMinutes();
+        } else if ((date.getMonth() === yesterday.getMonth() && date.getDate() === yesterday.getDate())) {
+          return "yesterday"
+        } else {
+          return date.getMonth() + " " + date.getDate()
+        }
+      },
+
       ...mapActions([
         "selectSession"
       ])
-    }
+    },
+
 
   };
 </script>
@@ -44,7 +63,7 @@
           <p class="latest-content">{{latestContent(item)}}</p>
         </div>
         <div class="right">
-          <p class="time">20:43</p>
+          <p class="time">{{latestTime(item)}}</p>
           <p v-if="item.unread" class="unread">{{item.unread}}</p>
         </div>
       </li>

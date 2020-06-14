@@ -26,17 +26,19 @@ const actions = {
       socket.emit("group", {
         text: content,
         receiver_id: rootState.currentSessionId,
+        date: new Date().getTime()
       })
     } else {
       socket.emit("msg", {
         text: content,
         receiver_id: rootState.currentSessionId,
+        date: new Date().getTime()
       })
     }
   },
 
   addNewIncomingMessage({commit, rootState}, msg) {
-    commit("PUSH_NEW_MESSAGE", [msg.sender_id, msg.text, msg.type])
+    commit("PUSH_NEW_MESSAGE", [msg.sender_id, msg.text, msg.type, msg.date])
   },
   selectSession: ({commit}, id) => commit('SELECT_SESSION', id),
 

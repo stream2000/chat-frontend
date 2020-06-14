@@ -67,12 +67,12 @@ const mutations = {
     let session = sessions.find(item => item.id === currentSessionId);
     session.messages.push({
       content: content,
-      date: new Date(),
+      date: new Date().getTime(),
       self: true
     });
   },
 
-  PUSH_NEW_MESSAGE({sessions}, [sender_id, content, type]) {
+  PUSH_NEW_MESSAGE({sessions}, [sender_id, content, type, date]) {
     // TODO add more logic when the session is a group session
     if (type === "group") {
       var session = sessions.find(item => item.id == 0)
@@ -81,7 +81,7 @@ const mutations = {
     }
     session.messages.push({
       content: content,
-      date: new Date(),
+      date: date,
       self: false,
       senderId: sender_id,
     });
@@ -108,7 +108,7 @@ const mutations = {
 
   ADD_NEW_USER(state, newUser) {
     let u = state.otherUsers.find(item => item.id === newUser.id)
-    if(u != null){
+    if (u != null) {
       return
     }
     state.otherUsers.push(newUser)
