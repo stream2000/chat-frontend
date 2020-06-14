@@ -2,7 +2,7 @@ import io from "socket.io-client"
 import store from "./store/store";
 import Element from "element-ui";
 
-const socket = io('http://127.0.0.1:8090');
+const socket = io('http://47.96.156.169:8090');
 
 socket.on("msg", msg => {
   if (store.state.isLogin)
