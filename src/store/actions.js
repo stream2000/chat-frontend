@@ -63,7 +63,7 @@ const actions = {
         otherUsers.push({
           id: 0,
           name: "迦勒底群聊",
-          img: "/static/2.png"
+          img: "/static/image/2.png"
         })
         data.sessions.forEach(item => otherUsers.push(item))
         commit('INIT_DATA', [data.user, otherUsers])

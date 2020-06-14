@@ -109,7 +109,7 @@
               })
             }
           }).catch((reason => {
-            log.console(reason)
+            console.log(reason)
           }))
         }))
       },

@@ -13,7 +13,7 @@ Vue.use(Element, {size: 'small', zIndex: 3000})
 Vue.prototype.$axios = Axios;
 Vue.prototype.$socket = socket;
 
-Axios.defaults.baseURL = 'http://47.96.156.169:8cp89';
+Axios.defaults.baseURL = 'http://47.96.156.169:8089';
 
 Axios.interceptors.response.use(function (response) {
   return response

@@ -77,7 +77,7 @@ store.watch(
     if (val.length === 0) {
       return
     }
-    let sessionsKey = "user-" + this.a.state.id + "-sessions"
+    let sessionsKey = "user-" + store.state.id + "-sessions"
     localStorage.setItem(sessionsKey, JSON.stringify(val));
   },
   {
