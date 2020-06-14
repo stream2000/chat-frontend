@@ -34,12 +34,19 @@
         let date = new Date(latestMessage.date)
         let yesterday = new Date(new Date().getTime() - 1000 * 60 * 60 * 24);
         let today = new Date();
+        const fillWithZero = target => {
+          if (target < 10) {
+            return "0" + target
+          } else {
+            return target
+          }
+        }
         if (date.getMonth() === today.getMonth() && date.getDate() === today.getDate()) {
-          return date.getHours() + ':' + date.getMinutes();
+          return fillWithZero(date.getHours()) + ':' + fillWithZero(date.getMinutes())
         } else if ((date.getMonth() === yesterday.getMonth() && date.getDate() === yesterday.getDate())) {
-          return "yesterday"
+          return "昨天"
         } else {
-          return date.getMonth() + " " + date.getDate()
+          return date.getMonth() + "." + date.getDate()
         }
       },
 

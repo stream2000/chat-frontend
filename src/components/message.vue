@@ -38,12 +38,19 @@
         let date = new Date(timeStamp)
         let yesterday = new Date(new Date().getTime() - 1000 * 60 * 60 * 24);
         let today = new Date();
+        const fillWithZero = target => {
+          if (target < 10) {
+            return "0" + target
+          } else {
+            return target
+          }
+        }
         if (date.getMonth() === today.getMonth() && date.getDate() === today.getDate()) {
-          return "today " + date.getHours() + ':' + date.getMinutes();
+          return fillWithZero(date.getHours()) + ':' + fillWithZero(date.getMinutes());
         } else if ((date.getMonth() === yesterday.getMonth() && date.getDate() === yesterday.getDate())) {
-          return "yesterday " + date.getHours() + ':' + date.getMinutes();
+          return "昨天 " + fillWithZero(date.getHours()) + ':' + fillWithZero(date.getMinutes())
         } else {
-          return date.getMonth() + " " + date.getDate() + "  " + date.getHours() + ':' + date.getMinutes();
+          return date.getMonth() + "." + date.getDate() + "  " + fillWithZero(date.getHours()) + ':' + fillWithZero(date.getMinutes())
         }
       }
     },
